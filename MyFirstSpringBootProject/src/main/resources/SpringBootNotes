@@ -1,0 +1,179 @@
+SPRING BOOT
+
+In Spring framework, lot of focus is on the configuration and not n convention(coding). In order to avoid this, Spring Framework came into picture.
+Spring Boot is an extension to Spring. It gives all the dependencies, configuration and its main idea is to give production ready application.
+
+SB provides jars for Embedded server(Tomcat), dependencies, configuration.
+If we want to change any configuration manually, it can be done in application.properties file.
+
+For web application. : springBoot starter web
+For JDBC application - spring boot starter JDBC
+
+Dependency Injection:
+————————————
+
+Dependency Injection is a fundamental aspect of the Spring framework, through which
+the Spring container “injects” objects into other objects or “dependencies”.
+This allows for loose coupling of components and moves the responsibility of managing components onto the container
+
+Dependency injection is a technique in which an object receives other objects that it depends on, called dependencies.
+Typically, the receiving object is called a client and the passed-in ('injected') object is called a service
+
+Example: A Car class might need a reference to an Engine class. These required classes are called dependencies,
+and in this example the Car class is dependent on having an instance of the Engine class to run.
+
+
+1. To achieve loose coupling(1 object should not totally dependent on the other). 
+Example:
+Laptop {
+HardDrive obj;
+Ram ob;
+}
+
+We do abstraction (by creating an abstract class or an interface on top of this HardDrive to incorporate any changes(multiple hard drive companies like Hitachi, Samsung)
+HardDrive obj = new Hitachi(); or samsung();
+Here , we shunt hardcode, so the hard drive obj is injected into Laptop. This injection is done by the external containers in Spring framework.
+Dependency Injection below:
+Class Laptop {
+@autowired
+HardDrive obj;
+}
+
+@Component
+Class Hitachi implements HardDrive {
+}
+
+2. For Testing:  Only if our app is loosely coupled testing can be done on the objects without affecting each other. For example, a mock obj can be created on the database and tested with the app obj without affecting the database.
+
+-- AUTOWIRING 
+@Autowired
+Autowiring is a great technique used to reduce the wiring up and configuration of code.
+Marks a constructor, field, setter method, or config method as to be autowired by Spring's dependency injection.
+To autowire our applications using the Java configuration, we just simply need to add a @Autowired  to our constructor, field, setter method, or config method.
+It automatically searches for the object and by default autowire searches for the type not by name of the object.
+The default name of the class object in the container is the lowercase of the class name. 
+Example : For the class Laptop,  the object name is laptop , the object type is Laptop.class
+We can overwrite the class name giving different name at @component (“lap1”)
+
+
+@Qualifier : the autowire searches for the object by type 
+
+-- SPRING SCOPES
+There are 5 scopes available. Requires AOP jar for @scope annotation
+
+    -SINGLETON - It is a default scope. Only one instantiation. Single instance per Spring container.
+    RealTime Usage: You can store state unique to that application in there, but you don't want to store state unique to that user inside that object.
+    - PROTOTYPE - It is a new bean, a unique instance per request.  
+		Note: If we don’t want to see the object created at all, it is possible in priototype(don’t call get bean)
+
+    Valid only in web-awre spring projects
+    - REQUEST - It returns a bean per HTTP request, which sounds a lot like prototype except it's for the lifecycle of a bean request,
+                which is fairly short, but longer than prototype where it's one instance per every time I ask the container for a bean.
+    - SESSION - The session just returns a single bean per HTTP session, and that will live as long as that user session is alive,
+                so 10 minutes, 20 minutes, 30 minutes, however long they're alive on that website a bean of scope session will stick around.
+    - GLOBAL - It returns a single bean per application, so once I access it, it's alive for the duration of that application,
+               not just my visit to that application. You could think of it as singleton, but it's really the entire life of that
+               application on the server until it gets undeployed or the server gets rebooted.
+
+
+Spring Boot application by extending SpringBootServletInitializer, it creates a dispatcher servlet and start serving up things.
+And as part of that annotation of @SpringBootApplication, it goes and starts looking for the controllers(Greeting and Regirstration) and the
+annotations such as @Controller and @GetMapping.
+
+
+SPRING BOOT WEB APP
+—————————————
+1. Webapp using Spring boot 
+2. Application properties file:
+Spring boot provides auto configuration but we can even manually provide configuration if any path is changed from default directory structure.
+Example:
+Jsp pages or any other pages can be configured manually in application.preperties file 
+Prefix - path of the file
+Suffix - extension of the file
+3. Webapp using Spring Boot accepting client data
+4. Webapp using Spring Boot ModelAndView
+
+Dispatcher Servlet:
+The DispatcherServlet is the front controller in Spring web applications. It's used to create web applications and REST services in Spring MVC. 
+In a traditional Spring web application, this servlet is defined in the web. ... xml file to DispatcherServlet in a Spring Boot application.
+
+ModelAndView: 
+Represents a model and view returned by a handler, to be resolved by a DispatcherServlet. 
+The view can take the form of a String view name which will need to be resolved by a ViewResolver object; 
+alternatively a View object can be specified directly. The model is a Map, allowing the use of multiple objects keyed by name.
+
+viewResolver:
+Spring provides view resolvers, which enable you to render models in a browser without tying you to a specific view technology. ... 
+The two interfaces that are important to the way Spring handles views are ViewResolver and View . The ViewResolver provides a mapping between view names and actual views.
+
+5. Webapp using Spring Boot Model object : Passing an object into ModelAndview key and getting the object values in the view.
+6. Spring Boot JPA MVC H2 Examples 
+      Connecting to H2 embedded database, create table, insert data into it , insert data using spring boot, and querying the table using spring boot in model and view format and in json format
+7. Postman , Data JPA, MVC, H2, REST Example
+      Postman is a client side application.
+     Postman is an application used for API testing. 
+     It is a HTTP client that tests HTTP requests, utilizing a graphical user interface, through which we obtain different types of responses that need to be subsequently validated.
+
+Note: Jackson core jar file present in Maven dependency is responsible to convert the Java object data into JSON format
+
+8. Content Negotiation : It helps the Consumer and Provider interact about the data exchange format.  (JSON or XML in this example)
+       In the maven dependency, add Jackson format XML dependency 
+9. REST API:
+       Post Request (POST): data sent in JSON format , saved into repo and returned in JSON format using Postman API.  (Server consumes data)
+       Get Request (GET): return data from repo in JSON format (Server produces data)
+       Delete Request (DELETE)
+       Update or Save Request (PUT)
+
+RESTful Service:
+Communication of data occurs in JSON format.
+CRUD, Get all students, Patch(updating the required field)
+
+REST Standards:
+POST /students
+GET /students
+GET /students/{student_id}
+PUT /student/{student_id}
+DELETE /student/{student_id}
+PATCH /student/{student_id}
+
+Request Pay load. :  the json which I send to server through postman
+Response Pay load:  the json which we get from server 
+
+What is RESTful service?
+HTTP Status codes
+HttpSession Management
+
+
+10. Spring Data REST. (NO CONTROLLER) services directly hit the repository
+Spring Data REST is a framework that builds itself on top of the applications data repositories and expose those repositories in the form of REST endpoints. 
+In order to make it easier for the clients to discover the HTTP access points exposed by the repositories, Spring Data REST uses hypermedia driven endpoints.
+
+What is JPA?  
+———————
+The Java Persistence API (JPA) is a Java specification for accessing, persisting, and managing data between Java objects / classes and a relational database.
+JPA is now considered the standard industry approach for Object to Relational Mapping (ORM) in the Java Industry.
+JPA is specification, and requires an implementation.
+JPA also defines a runtime EntityManager API for processing queries and transaction on the objects against the database. 
+
+
+ORM (Object Relational Mapping) 
+Java Objects with data are mapped to the database 
+Class name - Table name
+Class variables - table columns
+
+NOTE:
+Hibernate , iBatis, TopLink are the tools to implement the ORM applications where the data is mapped between Java objects and the databases.
+With the help of JPA, it is easy to switch between these tools if needed based on the requirements.
+Because JPA is a specification where the app is built and the implementation can be any of the tools Hibernate or iBatis or TopLink.
+
+
+
+
+To Study:
+1. RESTful service theory parts learn the below conceptS
+HTTP, HTTP Session management , HTTPS status codes, client, server, Request Payload, Response Payload, API 
+2. Microservices integration
+  Service to Service call (Examples Student & Department, Online shoppng(Shipment & Price services. )
+3. Performance issues Handling, Error handling based on the HTTP status codes
+4. Core Java, Servlets, JSP, HTTP , Java basic programs, data structure programs, spring boot, sprint mvc, spring core   notes.
+5. Hibernate video

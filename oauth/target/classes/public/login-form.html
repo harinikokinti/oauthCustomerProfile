@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>User Login Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.2.1/jquery.serializejson.js"></script>
+</head>
+
+<body>
+
+<h1>SIGN IN</h1>
+<form action="/" id="loginForm">
+  User name : <input type="text" name="customerId" > <br>
+  Password : <input type="password" name="password" > <br>
+  <input type="submit" name="submit">
+</form>
+
+<script type="text/javascript">
+
+   $( "#loginForm" ).submit(function( event ) {
+
+  // Stop form from submitting normally
+  event.preventDefault();
+
+  // Send the data using post
+  var json = JSON.stringify($("#loginForm").serializeJSON());
+
+  alert(json)
+
+  $.ajax( {url: "http://localhost:9001/oauth/tokens",
+  type: "POST",
+  headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+   data: json, function(respone) {
+    alert(response)
+  }})
+});
+</script>
+
+</body>
+</html>

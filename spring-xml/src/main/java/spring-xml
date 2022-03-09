@@ -1,0 +1,37 @@
+SPRING - XML
+-------------
+
+Spring configuration is done in 3 ways.
+1. Using XML file
+2. Using annotation based configuration
+3. Using Java Configuration(new type)
+
+
+
+-- applicationContext.xml
+Name doesnt matter
+Spring context sort of a HashMap
+Can simply be a registry
+XML configuration begins with this file
+Namespaces aid in configuration/validation
+
+
+-- Bean creation in the xml file
+-- setter injection
+-- constructor injection
+    Guaranteed contract
+    constructor defined
+    used together with setter
+    Index-based
+
+-- AUTOWIRE
+Spring automatically wires beans
+4 types of autowiring
+  1. by type : autowires based on class type. It should have only 1 type. Ex: Car type
+        This allows a property to be autowired if exactly one bean of that property type exists within a container.
+        So let's say I have a car object that we're injecting in. If there's only one car object of that type of that class,
+        then we can inject it in. But if I have two types of cars, so two car objects with different names,
+        I'll get a fatal exception because it can't choose which one of those two because it's just looking at the class type.
+  2. by name
+  3. by constructor
+  4. no  :  none for autowiring

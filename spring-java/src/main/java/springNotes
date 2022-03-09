@@ -1,0 +1,127 @@
+SPRING - JAVA (No XML)
+-------------------
+-- DDEPENDENCY INJECTION
+
+Dependency Injection is a fundamental aspect of the Spring framework, through which
+the Spring container “injects” objects into other objects or “dependencies”.
+This allows for loose coupling of components and moves the responsibility of managing components onto the container
+
+Dependency injection is a technique in which an object receives other objects that it depends on, called dependencies.
+Typically, the receiving object is called a client and the passed-in ('injected') object is called a service
+
+Example: A Car class might need a reference to an Engine class. These required classes are called dependencies,
+and in this example the Car class is dependent on having an instance of the Engine class to run.
+
+Spring IOC (Inversion of Controller)
+Spring IoC Container is the core of Spring Framework.
+It creates the objects, configures and assembles their dependencies, manages their entire life cycle.
+IOC is technique where you let someone else to create the object for you. And the someone else in case of spring is IOC container.
+
+When to use DI
+1. You need to inject configuration data into one or more components.
+2. You need to inject the same dependency into multiple components.
+3. You need to inject different implementations of the same dependency.
+
+Advantages of DI:
+Readable, testable, reusuable, loose coupling between the class and its dependency,
+
+changes can be incorporated in the configuration file or xml file and not in the source code
+-------------------------------------------------
+
+2 ways of DI :
+-- SETTER INJECTION:
+It is like a method call, simply calling a setter of a Bean
+
+-- CONSTRUCTOR INJECTION
+Constructor injection is just like setter injection.
+We go through and create our bean instance just like we had before.
+Instead of calling the setter, we call the defined constructor.
+
+-- APPLICATION CONFIGURATION FILE (AppConfig.java)
+    @Configuration annotation
+    To define files that contain configuration code.
+    It is defined at class level
+    It replaces the applicationContext.xml file which used in earlier spring versions
+
+    @Bean annotation
+    To define a bean
+    It is defined at method level  ( Spring Beans defined by @Bean )
+    Applicable only at method level.
+
+
+-- SPRING SCOPES
+There are 5 scopes available. Requires AOP jar for @scope annotation
+
+    -SINGLETON - It is a default scope. Only one instantiation. Single instance per Spring container.
+    RealTime Usage: You can store state unique to that application in there, but you don't want to store state unique to that user inside that object.
+    - PROTOTYPE - It is a new bean, a unique instance per request.
+
+    Valid only in web-awre spring projects
+    - REQUEST - It returns a bean per HTTP request, which sounds a lot like prototype except it's for the lifecycle of a bean request,
+                which is fairly short, but longer than prototype where it's one instance per every time I ask the container for a bean.
+    - SESSION - The session just returns a single bean per HTTP session, and that will live as long as that user session is alive,
+                so 10 minutes, 20 minutes, 30 minutes, however long they're alive on that website a bean of scope session will stick around.
+    - GLOBAL - It returns a single bean per application, so once I access it, it's alive for the duration of that application,
+               not just my visit to that application. You could think of it as singleton, but it's really the entire life of that
+               application on the server until it gets undeployed or the server gets rebooted.
+
+-- AUTOWIRING
+Autowiring is a great technique used to reduce the wiring up and configuration of code.
+To autowire our applications using the Java configuration, we just simply need to add a component scan to our configuration
+file with an annotation @ComponentScan("")
+
+-- STEREOTYPE ANNOTATIONS
+Full autowiring is acheived using steoreotypes.
+Stereotype annotations are @Component , @Service , @Repository and @Controller annotations.
+These annotations are used for auto-detection of beans using @ComponentScan and component-scan
+
+
+-- ADVANCED BEAN CONFIGURATION
+BeanpostProcessor
+FactoryBean
+SpEL (Spring Expression Language)
+Proxies
+Profiles
+
+1. BeanpostProcessor: Bean Lifecycle
+    Instantiation -> populate properties -> BeanNameAware -> BeanFactoryAware -> Pre Initialization - BeanPostProcessors -> Initialize Bean ->initMethod -> Post Initialization - BeanPostProcessors
+2. FactoryBean
+
+
+--------------------------------
+
+Spring configuration is done in 3 ways.
+1. Using XML file
+2. Using annotation based configuration
+3. Using Java Configuration(new type)
+
+
+APPLICATION CONFIGURATION FILE
+
+@Configuration at class level  replaces applicationContext.xml
+@Bean at method level  ( Spring Beans defined by @Bean )
+
+
+SPRING FRAMEWORK by telsko website:
+
+Dependency Injection
+
+Maven: Maven is a building tool to provide all the dependencies needed to run the application
+
+
+
+
+Spring core Annotations:
+———————
+
+@Configuration
+@Bean
+
+@Component. :  To specify the class object
+@ComponentScan: scans all the components
+@Configuration. : it is a configuration file for you.
+@Autowired : it searches the object itself
+@Primary. [if 1 interface is implemented by multiple classes]
+@Qualifier : to match the name
+if 1 interface is implemented by multiple classes]. If wanted to specify by name at auto wired place  .
+

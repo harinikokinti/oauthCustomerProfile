@@ -1,0 +1,78 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.4.5)
+
+2021-05-22 11:09:01.675  INFO 4582 --- [           main] com.dhilli.cowin.CowinApplicationKt      : Starting CowinApplicationKt using Java 11.0.11 on Dhillis-MacBook-Pro.local with PID 4582 (/Users/dhilli/codebase/cowin/build/classes/kotlin/main started by dhilli in /Users/dhilli/codebase/cowin)
+2021-05-22 11:09:01.680  INFO 4582 --- [           main] com.dhilli.cowin.CowinApplicationKt      : No active profile set, falling back to default profiles: default
+2021-05-22 11:09:03.507  INFO 4582 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-05-22 11:09:03.799  INFO 4582 --- [           main] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port 8080
+2021-05-22 11:09:03.817  INFO 4582 --- [           main] com.dhilli.cowin.CowinApplicationKt      : Started CowinApplicationKt in 2.682 seconds (JVM running for 3.26)
+2021-05-22 13:00:29.989 ERROR 4582 --- [ctor-http-nio-5] reactor.core.publisher.Operators         : Operator called default onErrorDropped
+
+reactor.core.Exceptions$ErrorCallbackNotImplemented: org.springframework.web.reactive.function.client.WebClientRequestException: executor not accepting a task; nested exception is java.lang.IllegalStateException: executor not accepting a task
+Caused by: org.springframework.web.reactive.function.client.WebClientRequestException: executor not accepting a task; nested exception is java.lang.IllegalStateException: executor not accepting a task
+	at org.springframework.web.reactive.function.client.ExchangeFunctions$DefaultExchangeFunction.lambda$wrapException$9(ExchangeFunctions.java:141) ~[spring-webflux-5.3.6.jar:5.3.6]
+	Suppressed: reactor.core.publisher.FluxOnAssembly$OnAssemblyException: 
+Error has been observed at the following site(s):
+	|_ checkpoint ⇢ Request to GET https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=294&date=22-05-2021 [DefaultWebClient]
+Stack trace:
+		at org.springframework.web.reactive.function.client.ExchangeFunctions$DefaultExchangeFunction.lambda$wrapException$9(ExchangeFunctions.java:141) ~[spring-webflux-5.3.6.jar:5.3.6]
+		at reactor.core.publisher.MonoErrorSupplied.subscribe(MonoErrorSupplied.java:70) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4150) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onError(FluxOnErrorResume.java:103) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.FluxPeek$PeekSubscriber.onError(FluxPeek.java:221) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.FluxPeek$PeekSubscriber.onError(FluxPeek.java:221) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.FluxPeek$PeekSubscriber.onError(FluxPeek.java:221) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.MonoNext$NextSubscriber.onError(MonoNext.java:93) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.MonoFlatMapMany$FlatMapManyMain.onError(MonoFlatMapMany.java:204) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.SerializedSubscriber.onError(SerializedSubscriber.java:124) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.FluxRetryWhen$RetryWhenMainSubscriber.whenError(FluxRetryWhen.java:224) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.FluxRetryWhen$RetryWhenOtherSubscriber.onError(FluxRetryWhen.java:273) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.FluxConcatMap$ConcatMapImmediate.drain(FluxConcatMap.java:413) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.FluxConcatMap$ConcatMapImmediate.onNext(FluxConcatMap.java:250) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.EmitterProcessor.drain(EmitterProcessor.java:491) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.EmitterProcessor.tryEmitNext(EmitterProcessor.java:299) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.SinkManySerialized.tryEmitNext(SinkManySerialized.java:97) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.InternalManySink.emitNext(InternalManySink.java:27) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.FluxRetryWhen$RetryWhenMainSubscriber.onError(FluxRetryWhen.java:189) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.MonoCreate$DefaultMonoSink.error(MonoCreate.java:189) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.netty.http.client.HttpClientConnect$MonoHttpConnect$ClientTransportSubscriber.onError(HttpClientConnect.java:305) ~[reactor-netty-http-1.0.6.jar:1.0.6]
+		at reactor.core.publisher.MonoCreate$DefaultMonoSink.error(MonoCreate.java:189) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.netty.resources.DefaultPooledConnectionProvider$DisposableAcquire.onError(DefaultPooledConnectionProvider.java:167) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+		at reactor.netty.internal.shaded.reactor.pool.AbstractPool$Borrower.fail(AbstractPool.java:418) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+		at reactor.netty.internal.shaded.reactor.pool.SimpleDequePool.lambda$drainLoop$7(SimpleDequePool.java:390) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+		at reactor.core.publisher.FluxDoOnEach$DoOnEachSubscriber.onError(FluxDoOnEach.java:186) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.core.publisher.MonoCreate$DefaultMonoSink.error(MonoCreate.java:189) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.netty.resources.DefaultPooledConnectionProvider$PooledConnectionAllocator$PooledConnectionInitializer.onError(DefaultPooledConnectionProvider.java:549) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+		at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:142) ~[reactor-core-3.4.5.jar:3.4.5]
+		at reactor.netty.transport.TransportConnector$MonoChannelPromise._subscribe(TransportConnector.java:557) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+		at reactor.netty.transport.TransportConnector$MonoChannelPromise.lambda$subscribe$0(TransportConnector.java:477) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+		at io.netty.util.concurrent.AbstractEventExecutor.safeExecute$$$capture(AbstractEventExecutor.java:164) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+		at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+		at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500) ~[netty-transport-4.1.63.Final.jar:4.1.63.Final]
+		at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+		at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+		at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+		at java.base/java.lang.Thread.run(Thread.java:829) ~[na:na]
+Caused by: java.lang.IllegalStateException: executor not accepting a task
+	at io.netty.resolver.AddressResolverGroup.getResolver(AddressResolverGroup.java:61) ~[netty-resolver-4.1.63.Final.jar:4.1.63.Final]
+	at reactor.netty.transport.TransportConnector.doResolveAndConnect(TransportConnector.java:239) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.transport.TransportConnector.lambda$connect$2(TransportConnector.java:106) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.core.publisher.MonoFlatMap$FlatMapMain.onNext(MonoFlatMap.java:125) ~[reactor-core-3.4.5.jar:3.4.5]
+	at reactor.netty.transport.TransportConnector$MonoChannelPromise._subscribe(TransportConnector.java:557) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.transport.TransportConnector$MonoChannelPromise.lambda$subscribe$0(TransportConnector.java:477) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute$$$capture(AbstractEventExecutor.java:164) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500) ~[netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at java.base/java.lang.Thread.run(Thread.java:829) ~[na:na]
+

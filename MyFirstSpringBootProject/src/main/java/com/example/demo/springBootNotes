@@ -1,0 +1,76 @@
+SPRING BOOT
+
+In Spring framework, lot of focus is on the configuration and not n convention(coding). In order to avoid this, Spring Framework came into picture.
+Spring Boot is an extension to Spring. It gives all the dependencies, configuration and its main idea is to give production ready application.
+
+SB provides jars for Embedded server(Tomcat), dependencies, configuration.
+If we want to change any configuration manually, it can be done in application.properties file.
+
+For web application. : springBoot starter web
+For JDBC application - spring boot starter JDBC
+
+Dependency Injection:
+————————————
+
+Dependency Injection is a fundamental aspect of the Spring framework, through which
+the Spring container “injects” objects into other objects or “dependencies”.
+This allows for loose coupling of components and moves the responsibility of managing components onto the container
+
+Dependency injection is a technique in which an object receives other objects that it depends on, called dependencies.
+Typically, the receiving object is called a client and the passed-in ('injected') object is called a service
+
+Example: A Car class might need a reference to an Engine class. These required classes are called dependencies,
+and in this example the Car class is dependent on having an instance of the Engine class to run.
+
+
+1. To achieve loose coupling(1 object should not totally dependent on the other). 
+Example:
+Laptop {
+HardDrive obj;
+Ram ob;
+}
+
+We do abstraction (by creating an abstract class or an interface on top of this HardDrive to incorporate any changes(multiple hard drive companies like Hitachi, Samsung)
+HardDrive obj = new Hitachi(); or samsung();
+Here , we shunt hardcode, so the hard drive obj is injected into Laptop. This injection is done by the external containers in Spring framework.
+Dependency Injection below:
+Class Laptop {
+@autowired
+HardDrive obj;
+}
+
+@Component
+Class Hitachi implements HardDrive {
+}
+
+2. For Testing:  Only if our app is loosely coupled testing can be done on the objects without affecting each other. For example, a mock obj can be created on the database and tested with the app obj without affecting the database.
+
+-- AUTOWIRING 
+@Autowired
+Autowiring is a great technique used to reduce the wiring up and configuration of code.
+Marks a constructor, field, setter method, or config method as to be autowired by Spring's dependency injection.
+To autowire our applications using the Java configuration, we just simply need to add a @Autowired  to our constructor, field, setter method, or config method.
+It automatically searches for the object and by default autowire searches for the type not by name of the object.
+The default name of the class object in the container is the lowercase of the class name. 
+Example : For the class Laptop,  the object name is laptop , the object type is Laptop.class
+We can overwrite the class name giving different name at @component (“lap1”)
+
+
+@Qualifier : the autowire searches for the object by type 
+
+-- SPRING SCOPES
+There are 5 scopes available. Requires AOP jar for @scope annotation
+
+    -SINGLETON - It is a default scope. Only one instantiation. Single instance per Spring container.
+    RealTime Usage: You can store state unique to that application in there, but you don't want to store state unique to that user inside that object.
+    - PROTOTYPE - It is a new bean, a unique instance per request.  
+		Note: If we don’t want to see the object created at all, it is possible in priototype(don’t call get bean)
+
+    Valid only in web-awre spring projects
+    - REQUEST - It returns a bean per HTTP request, which sounds a lot like prototype except it's for the lifecycle of a bean request,
+                which is fairly short, but longer than prototype where it's one instance per every time I ask the container for a bean.
+    - SESSION - The session just returns a single bean per HTTP session, and that will live as long as that user session is alive,
+                so 10 minutes, 20 minutes, 30 minutes, however long they're alive on that website a bean of scope session will stick around.
+    - GLOBAL - It returns a single bean per application, so once I access it, it's alive for the duration of that application,
+               not just my visit to that application. You could think of it as singleton, but it's really the entire life of that
+               application on the server until it gets undeployed or the server gets rebooted.

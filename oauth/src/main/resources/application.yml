@@ -1,0 +1,10 @@
+server:
+  port: 9001
+  servlet:
+    context-path: /oauth
+
+
+token-cookie:
+  expiration:
+    access-token: 1800
+    refresh-token: 86400

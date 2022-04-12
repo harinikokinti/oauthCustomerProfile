@@ -26,15 +26,16 @@
   // Send the data using post
   var json = JSON.stringify($("#loginForm").serializeJSON());
 
-  alert(json)
+ // alert(json)
 
-  $.ajax( {url: "http://localhost:9001/oauth/tokens",
+  $.ajax( {
+  url: "http://localhost:9001/oauth/tokens",
   type: "POST",
   headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     },
-   data: json, function(respone) {
+   data: json, function(response) {
     alert(response)
   }})
 });
@@ -42,3 +43,18 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

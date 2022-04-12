@@ -25,6 +25,11 @@ public class Alien {
 		this.lang = lang;
 	}
 	
+	public String toString() {
+		
+		return " aid: " + aid + " aName: " + aName + " lang: " +lang ;
+	}
+	
 	
 
 }

@@ -1,9 +1,11 @@
 package com.harini.oauth.service;
 
+import com.harini.oauth.entity.CustomerIdentityEntity;
 import com.harini.oauth.entity.TokenEntity;
 import com.harini.oauth.exception.AuthenticationException;
-import com.harini.oauth.model.LoginRequest;
+import com.harini.oauth.model.CustomerIdentity;
 import com.harini.oauth.model.Tokens;
+import com.harini.oauth.repository.CustomerIdentityRepo;
 import com.harini.oauth.repository.TokenRepo;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -35,6 +37,9 @@ public class TokenService {
     @Autowired
     private TokenRepo tokenRepo;
 
+    @Autowired
+    private CustomerIdentityRepo customerIdentityRepo;
+
     private PrivateKey privateKey;
     private PublicKey publicKey;
 
@@ -43,26 +48,35 @@ public class TokenService {
         publicKey = getPublicKey();
     }
 
-    public Tokens generateTokens(LoginRequest loginRequest) throws AuthenticationException {
+    public Tokens generateTokens(CustomerIdentity customerIdentity) throws AuthenticationException {
 
-        if (loginRequest.getCustomerId().equals("love@gmail") && loginRequest.getPassword().equals("love")) {
-            String accessToken = generateAccessToken(loginRequest.getCustomerId());
-            String refreshToken = UUID.randomUUID().toString();
+       CustomerIdentityEntity customerIdentityEntity =  customerIdentityRepo.findByUsername(customerIdentity.getUsername());
+       System.out.println(customerIdentityEntity.getCustomerId());
+        System.out.println(customerIdentityEntity.getUsername());
+        System.out.println(customerIdentityEntity.getPassword());
+
+        if (customerIdentity.getUsername().equals(customerIdentityEntity.getUsername()) &&
+                customerIdentity.getPassword().equals(customerIdentityEntity.getPassword())) {
+            String accessToken = generateAccessToken(customerIdentityEntity.getCustomerId());
+            String refreshToken = UUID.randomUUID().toString(); // Universally Unique Identifier
             Tokens tokens = new Tokens(accessToken, refreshToken);
-            addTokens(tokens);
+            addTokens(tokens);  //  also adding this generated tokens into the table token
             return tokens;
         }
         throw new AuthenticationException("Invalid User Credential");
     }
 
     private String generateAccessToken(String customerId) {
+        System.out.println(customerId);
         return Jwts.builder()  // create token with
-                .setSubject(customerId)
+                .setSubject(String.valueOf(customerId))
                 .setExpiration(Date.from(LocalDateTime.now().plusMinutes(30).toInstant(ZoneOffset.systemDefault().getRules().getOffset(Instant.now()))))
                 .setId(UUID.randomUUID().toString())
                 .setIssuer("Orbitz")
-                .signWith(privateKey, SignatureAlgorithm.RS256)
+                .signWith(privateKey, SignatureAlgorithm.RS256)  // generate access token with private key signed to it
                 .compact();  // gets converted into string
+
+
     }
 
     public Tokens addTokens(Tokens tokens) {
@@ -77,21 +91,22 @@ public class TokenService {
 
     public Tokens refreshToken(String refreshToken) {
         TokenEntity tokenEntity = tokenRepo.findByRefreshToken(refreshToken);
-        String previousAccessToken = tokenEntity.getAccessToken();
+        String previousAccessToken = tokenEntity.getAccessToken(); // get accessToken from table using refreshToken
 
         String customerId = Jwts.parserBuilder()
                 .setSigningKey(publicKey)
                 .setAllowedClockSkewSeconds(TimeUnit.DAYS.toSeconds(1))
                 .build()
-                .parseClaimsJws(previousAccessToken)
+                .parseClaimsJws(previousAccessToken)  //  extract customerid using accessToken and the public key
                 .getBody()
                 .getSubject();
+        System.out.println(customerId);
 
-        String accessToken = generateAccessToken(customerId);
+        String accessToken = generateAccessToken(customerId);   //  generate new access token
         Tokens tokens = new Tokens();
-        tokens.setRefreshToken(UUID.randomUUID().toString());
+        tokens.setRefreshToken(UUID.randomUUID().toString());  // generate new refresh token
         tokens.setAccessToken(accessToken);
-        addTokens(tokens);
+        addTokens(tokens); // add the newly generated token into the table token after refresh
 
         return tokens;
     }
@@ -103,7 +118,6 @@ public class TokenService {
     private PrivateKey getPrivateKey() {
 
         RSAPrivateKey privateKey = null;
-
         try {
             String privateKeyContent = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("private_key.pem").toURI())));
             privateKeyContent = privateKeyContent.replaceAll("\\n", "")

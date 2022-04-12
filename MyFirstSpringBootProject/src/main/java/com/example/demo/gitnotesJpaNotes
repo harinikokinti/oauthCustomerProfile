@@ -1,0 +1,57 @@
+GIT
+
+GIT is created by Linus Torvald(who created Linux kernel which is open source)
+GIT is a distributed version control system
+
+Trunk Based Development : we can create branches in the GIT repository and  push and commit the code as  per the versions
+
+GitHub, gitLab, Atlassian BitBucket are the platforms for the developers 
+
+— Create Repository and create a file 
+By default it will be created in master 
+— you can create branches for adding/updating the file, thus maintaining versions
+— If you want to merge the changes, try to merge by pull request with the new  branch created with the updates and the master branch.
+
+— git Fork
+If you want to contribute to any open source project , you can fork that repository means, make a copy of the repository .
+Forking a repository allows you to freely experiment with changes without affecting the original project.
+
+ 
+
+—————————————————————————————————————————————————————————————————————
+
+To copy local project into git remote repository:
+
+git init
+cp ../FXRATE/.gitignore .
+git status
+git add --all
+git status
+git commit -am "initial changes "
+git remote add origin git@github.com:harinikokinti/MyFirstSpringBootProject.git
+git status
+git push origin master
+
+
+—To remove the already added remote by alias(origin)
+git remote rm origin
+----------------------------
+
+
+What is JPA?  
+———————
+The Java Persistence API (JPA) is a Java specification for accessing, persisting, and managing data between Java objects / classes and a relational database.
+JPA is now considered the standard industry approach for Object to Relational Mapping (ORM) in the Java Industry.
+JPA is specification, and requires an implementation.
+JPA also defines a runtime EntityManager API for processing queries and transaction on the objects against the database. 
+
+
+ORM (Object Relational Mapping) 
+Java Objects with data are mapped to the database 
+Class name - Table name
+Class variables - table columns
+
+NOTE:
+Hibernate , iBatis, TopLink are the tools to implement the ORM applications where the data is mapped between Java objects and the databases.
+With the help of JPA, it is easy to switch between these tools if needed based on the requirements.
+Because JPA is a specification where the app is built and the implementation can be any of the tools Hibernate or iBatis or TopLink.

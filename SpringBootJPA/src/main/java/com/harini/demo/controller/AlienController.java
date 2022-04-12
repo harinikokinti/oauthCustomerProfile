@@ -1,4 +1,8 @@
 package com.harini.demo.controller;
+/*
+ * For h2 in memory database  
+ * http://localhost:8080/h2-console/  
+ */
 
 import java.util.List;
 
@@ -46,7 +50,7 @@ public class AlienController {
 	@GetMapping(path="/alien")
 	public List<Alien> getAliens() {
 		
-		return repo.findAll();
+		return alienService.getAliens();
 		
 	}
 	
@@ -87,7 +91,7 @@ public class AlienController {
 	
 	
 	/*
-	 * Data seen on the browser in JSON format by default. It is not REST application
+	 * Data seen on the browser in JSON format by default or we can have a view in jsp file. It is not REST application
 	
 	@RequestMapping("/addAlien")
 	public String addAlien(Alien alien) {

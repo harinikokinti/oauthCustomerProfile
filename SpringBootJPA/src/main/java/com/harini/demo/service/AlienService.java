@@ -1,5 +1,7 @@
 package com.harini.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -32,6 +34,23 @@ public class AlienService {
 		alien.setCountry(country);
 
 		return alien;
+	}
+	
+	
+	public List<Alien> getAliens() {
+		List<Alien> aliens = repo.findAll();
+		
+		for(Alien alien : aliens) {
+			
+			Country country = countryRestTemplate
+					.getForEntity("http://localhost:8090/countries" + alien.getCountryId(), Country.class).getBody();
+			alien.setCountry(country);
+			aliens.add(alien);
+		}
+		aliens.forEach(System.out::print);
+		
+		return aliens;
+		
 	}
 
 }
